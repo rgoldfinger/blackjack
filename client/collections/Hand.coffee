@@ -10,6 +10,7 @@ class window.Hand extends Backbone.Collection
       @add(@deck.pop()).last()
       if @scores()[0] > 21
         @bust = true
+        @trigger 'playerBusted'
 
 
 

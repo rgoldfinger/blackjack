@@ -6,7 +6,8 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
-
+    @get('playerHand').on 'playerBusted', =>
+      @trigger 'gameOver', false
 
   #on add event on player hand
     # check the score
