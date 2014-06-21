@@ -14,3 +14,12 @@
 .hand {
   overflow: auto;
 }
+
+.card-img {
+  height: 100%;
+  width: auto;
+}
+
+.covered .card-img {
+  visibility: hidden;
+}

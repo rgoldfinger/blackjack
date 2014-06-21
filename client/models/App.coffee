@@ -7,17 +7,28 @@ class window.App extends Backbone.Model
     @set 'dealerHand', deck.dealDealer()
 
     @get('playerHand').on 'playerBusted', =>
+      @get('dealerHand').at(0).flip()
       @trigger 'gameOver', 'dealerWon'
 
     @get('playerHand').on 'stand', =>
       @get('dealerHand').at(0).flip()
-      # while dealer score <= 16
-      while @get('dealerHand').scores() <= 16 || @get('dealerHand').scores()[1] <= 16
-        # calls hit for dealer
-        @get('dealerHand').hit()
 
       dealer = @get('dealerHand').scores()
       player = @get('playerHand').scores()
+
+      if dealer.length == 2
+        dealerScore = dealer[1]
+      else
+        dealerScore = dealer[0]
+
+      while dealerScore < 17
+        @get('dealerHand').hit()
+        dealer = @get('dealerHand').scores()
+        if dealer.length == 2 and dealer[1] < 22
+          dealerScore = dealer[1]
+        else
+          dealerScore = dealer[0]
+
 
       if dealer.length > 1 and dealer[1] < 22
         dealer[0] = dealer[1]
