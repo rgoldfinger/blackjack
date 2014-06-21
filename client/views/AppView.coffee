@@ -14,14 +14,15 @@ class window.AppView extends Backbone.View
     @render()
     @model.on 'gameOver', @render, @
 
-  render: (playerWon = null) ->
+  render: (result = null) ->
     @$el.children().detach()
     @$el.html @template()
-    if playerWon != null
-      playerWon = playerWon[0]
-      if not playerWon
+    if result != null
+      if result == 'dealerWon'
         @$el.children().first().html('You LOST!')
-      else
+      else if result == 'playerWon'
         @$el.children().first().html('You WON!')
+      else if result == 'push'
+        @$el.children().first().html('push')
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el

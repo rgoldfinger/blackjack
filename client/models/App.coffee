@@ -7,21 +7,29 @@ class window.App extends Backbone.Model
     @set 'dealerHand', deck.dealDealer()
 
     @get('playerHand').on 'playerBusted', =>
-      @trigger 'gameOver', false
+      @trigger 'gameOver', 'dealerWon'
 
-  #on add event on player hand
-    # check the score
-    # if score is over 21
-    # indicate loss
-    # UNSURE WHERE LIVES: player loses event
+    @get('playerHand').on 'stand', =>
+      @get('dealerHand').at(0).flip()
+      # while dealer score <= 16
+      while @get('dealerHand').scores() <= 16 || @get('dealerHand').scores()[1] <= 16
+        # calls hit for dealer
+        @get('dealerHand').hit()
 
-  #on add event on dealer hand
-    # check the score
-    #
+      dealer = @get('dealerHand').scores()
+      player = @get('playerHand').scores()
 
-###
+      if dealer.length > 1 and dealer[1] < 22
+        dealer[0] = dealer[1]
 
-need score when "hit" (to make sure not busted)
-need score when dealer players
-in determining winner
-###
+      if player.length > 1 and player[1] < 22
+        player[0] = player[1]
+
+      if dealer[0] > 21 or dealer[0] < player[0]
+        result = 'playerWon'
+      else if dealer[0] == player[0]
+        result = 'push'
+      else
+        result = 'dealerWon'
+
+      @trigger 'gameOver', result

@@ -10,9 +10,13 @@ class window.Hand extends Backbone.Collection
       @add(@deck.pop()).last()
       if @scores()[0] > 21
         @bust = true
-        @trigger 'playerBusted'
+        if @isDealer
+          @trigger 'dealerBusted'
+        else
+          @trigger 'playerBusted'
 
-
+  stand: ->
+    @trigger 'stand'
 
   scores: ->
     # The scores are an array of potential scores.
