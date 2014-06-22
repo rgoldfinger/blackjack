@@ -15,6 +15,7 @@ class window.Hand extends Backbone.Collection
           @trigger 'dealerBusted'
         else
           @trigger 'playerBusted'
+    @last()
 
   stand: ->
     @trigger 'stand'

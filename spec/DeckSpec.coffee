@@ -15,3 +15,7 @@ describe 'deck', ->
       assert.strictEqual deck.length, 49
       hand.playable && (assert.strictEqual deck.last(), hand.hit())
       hand.playable && (assert.strictEqual deck.length, 48)
+    it "should give the player another card", ->
+      assert.strictEqual hand.length, 2
+      hand.hit()
+      assert.strictEqual hand.length, 3
