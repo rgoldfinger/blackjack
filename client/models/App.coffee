@@ -5,6 +5,7 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @set 'playerScore', 20
 
     @get('playerHand').on 'playerBusted', =>
       @get('dealerHand').at(0).flip()
@@ -44,3 +45,10 @@ class window.App extends Backbone.Model
         result = 'dealerWon'
 
       @trigger 'gameOver', result
+
+  nextHand: ->
+    score = @get 'playerScore'
+    @initialize()
+    @set 'playerScore', score
+
+    @trigger 'nextHand'
